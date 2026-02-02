@@ -1,72 +1,89 @@
 <div class="modal-dialog" role="document">
-	<div class="modal-content">
+	<div class="modal-content manga-challenge-modal">
 		<div class="modal-body">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<button type="button" class="close manga-close-btn" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
-			<ul class="nav nav-tabs">
+			
+			<!-- Challenge Tabs -->
+			<ul class="nav nav-tabs manga-challenge-tabs">
 				<li class="nav-item">
-					<a class="nav-link active" href="#challenge">Challenge</a>
+					<a class="nav-link active" href="#challenge" data-toggle="tab">Challenge</a>
 				</li>
 				{% block solves %}
 					<li class="nav-item">
-						<a class="nav-link challenge-solves" href="#solves">
+						<a class="nav-link challenge-solves" href="#solves" data-toggle="tab">
 							{% if solves != None %}
-								{{ solves }} {% if solves > 1 %}Solves{% else %}Solves{% endif %}
+								{{ solves }} {% if solves > 1 %}Solves{% else %}Solve{% endif %}
 							{% endif %}
 						</a>
 					</li>
 				{% endblock %}
 			</ul>
+			
 			<div role="tabpanel">
 				<div class="tab-content">
+					<!-- Challenge Tab Content -->
 					<div role="tabpanel" class="tab-pane fade show active" id="challenge">
-						<h2 class='challenge-name text-center pt-3'>
+						<!-- Challenge Name -->
+						<h2 class='manga-challenge-name text-center pt-3'>
 							{{ challenge.name }}
 						</h2>
-						<h3 class="challenge-value text-center">
-							{{ challenge.value }}
+						
+						<!-- Challenge Value -->
+						<h3 class="manga-challenge-value text-center">
+							<span class="manga-badge-points">
+								{{ challenge.value }} <small>pts</small>
+							</span>
 						</h3>
 
-						<div class="challenge-tags text-center">
+						<!-- Challenge Tags -->
+						<div class="manga-challenge-tags text-center mb-3">
 							{% block tags %}
 								{% for tag in tags %}
-									<span class='badge badge-info challenge-tag'>{{ tag }}</span>
+									<span class='manga-tag'>{{ tag }}</span>
 								{% endfor %}
 							{% endblock %}
 						</div>
 
-						<span class="challenge-desc">{% block description %}{{ challenge.html }}{% endblock %}</span>
+						<!-- Challenge Description -->
+						<div class="manga-challenge-description">
+							<span class="challenge-desc">
+								{% block description %}{{ challenge.html }}{% endblock %}
+							</span>
+						</div>
 
-						<span class="challenge-connection-info">
-							{% block connection_info %}
-								{% set conn = challenge.connection_info %}
-								{% if not conn %}
-								{% elif conn.startswith("http") %}
-									{{ conn | urlize(target="_blank") }}
-								{% else %}
-									<code>{{ conn }}</code>
-								{% endif %}
-							{% endblock %}
-						</span>
+						<!-- Connection Info -->
+						<div class="manga-challenge-connection">
+							<span class="challenge-connection-info">
+								{% block connection_info %}
+									{% set conn = challenge.connection_info %}
+									{% if not conn %}
+									{% elif conn.startswith("http") %}
+										<div class="manga-alert manga-alert-info text-center mb-3">
+											{{ conn | urlize(target="_blank") }}
+										</div>
+									{% else %}
+										<div class="manga-alert manga-alert-secondary text-center mb-3">
+											<code>{{ conn }}</code>
+										</div>
+									{% endif %}
+								{% endblock %}
+							</span>
+						</div>
 
-						<div class="challenge-hints hint-row row">
+						<!-- Challenge Hints -->
+						<div class="manga-challenge-hints hint-row row">
 							{% for hint in hints %}
 								<div class='col-md-12 hint-button-wrapper text-center mb-3'>
-									<a class="btn btn-info btn-hint btn-block load-hint" href="javascript:;" data-hint-id="{{ hint.id }}">
+									<a class="manga-btn manga-btn-hint btn-block load-hint" href="javascript:;" data-hint-id="{{ hint.id }}">
 										{% if hint.content %}
-											<small>
-												View Hint
-											</small>
+											<small>View Hint</small>
 										{% else %}
 											{% if hint.cost %}
-												<small>
-													Unlock Hint for {{ hint.cost }} points
-												</small>
+												<small>Unlock Hint for {{ hint.cost }} points</small>
 											{% else %}
-												<small>
-													View Hint
-												</small>
+												<small>View Hint</small>
 											{% endif %}
 										{% endif %}
 									</a>
@@ -74,12 +91,12 @@
 							{% endfor %}
 						</div>
 
-						<div class="row challenge-files text-center pb-3">
+						<!-- Challenge Files -->
+						<div class="row manga-challenge-files text-center pb-3">
 							{% for file in files %}
-								<div class='col-md-4 col-sm-4 col-xs-12 file-button-wrapper d-block'>
-									<a class='btn btn-info btn-file mb-1 d-inline-block px-2 w-100 text-truncate'
-									   href='{{ file }}'>
-										<i class="fas fa-download"></i>
+								<div class='col-md-4 col-sm-4 col-xs-12 file-button-wrapper d-block mb-2'>
+									<a class='manga-btn manga-btn-file d-inline-block px-2 w-100 text-truncate'
+									   href='{{ file }}' download>
 										<small>
 											{% set segments = file.split('/') %}
 											{% set file = segments | last %}
@@ -95,57 +112,63 @@
 							{% endfor %}
 						</div>
 
+						<!-- Attempt Counter -->
 						{% if max_attempts > 0 %}
-						<div class="row text-center">
+						<div class="row text-center mb-3">
 							<div class="col-md-12">
-								<p>
-									{{ attempts }}/{{ max_attempts }} attempt{{ max_attempts|pluralize }}
-								</p>
+								<div class="manga-alert manga-alert-warning">
+									<strong>{{ attempts }}/{{ max_attempts }}</strong> attempt{{ max_attempts|pluralize }} used
+								</div>
 							</div>
 						</div>
 						{% endif %}
 
-						<div class="row submit-row">
+						<!-- Submit Form -->
+						<div class="row manga-submit-row">
 							<div class="col-md-9 form-group">
 								{% block input %}
 									<input id="challenge-id" class="challenge-id" type="hidden" value="{{ challenge.id }}">
-									<input id="challenge-input" class="challenge-input" type="text" name="answer" placeholder="Flag"/>
+									<input id="challenge-input" class="manga-challenge-input" type="text" name="answer" placeholder="Enter your flag here..." autocomplete="off"/>
 								{% endblock %}
 							</div>
 							<div class="col-md-3 form-group key-submit">
 								{% block submit %}
-								<button id="challenge-submit" class="challenge-submit" type="submit">
-									Submit
-								</button>
+								<button id="challenge-submit" class="manga-btn manga-btn-submit w-100" type="submit">SUBMIT</button>
 								{% endblock %}
 							</div>
 						</div>
 
+						<!-- Notification Area -->
 						<div class="row notification-row">
 							<div class="col-md-12">
-								<div id="result-notification" class="alert alert-dismissable text-center w-100"
+								<div id="result-notification" class="manga-alert alert-dismissable text-center w-100"
 									 role="alert" style="display: none;">
+									<button type="button" class="close manga-close-btn" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
 									<strong id="result-message"></strong>
 								</div>
 							</div>
 						</div>
 					</div>
 
+					<!-- Solves Tab Content -->
 					<div role="tabpanel" class="tab-pane fade" id="solves">
-						<div class="row">
+						<div class="row pt-3">
 							<div class="col-md-12">
-								<table class="table table-striped text-center">
-									<thead>
-									<tr>
-										<td><b>Name</b>
-										</td>
-										<td><b>Date</b>
-										</td>
-									</tr>
-									</thead>
-									<tbody id="challenge-solves-names">
-									</tbody>
-								</table>
+								<h4 class="manga-solves-title text-center mb-3">Challenge Solvers</h4>
+								<div class="table-responsive">
+									<table class="table table-striped table-hover text-center manga-solves-table">
+										<thead>
+										<tr>
+											<th>Name</th>
+											<th>Date</th>
+										</tr>
+										</thead>
+										<tbody id="challenge-solves-names">
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -154,3 +177,479 @@
 		</div>
 	</div>
 </div>
+
+<!-- Manga Challenge Modal Styles -->
+<style>
+/* Manga Panel Challenge Modal */
+.manga-challenge-modal {
+	background: #1a1a1a;
+	border: 4px solid #2a2a2a;
+	border-radius: 0;
+	box-shadow: 
+		8px 8px 0 rgba(0,0,0,0.5),
+		inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.manga-challenge-modal::before {
+	content: "";
+	position: absolute;
+	top: -6px;
+	left: -6px;
+	right: -6px;
+	bottom: -6px;
+	border: 1px solid rgba(255,255,255,0.1);
+	pointer-events: none;
+}
+
+.manga-challenge-modal .modal-body {
+	padding: 1.5rem;
+}
+
+/* Close Button */
+.manga-close-btn {
+	color: #e0e0e0;
+	opacity: 1;
+	font-size: 2.5rem;
+	transition: all 0.2s ease;
+	font-weight: 900;
+	line-height: 1;
+	text-shadow: 2px 2px 0 #000;
+}
+
+.manga-close-btn:hover {
+	color: #f5f5f5;
+	transform: rotate(90deg) scale(1.2);
+}
+
+/* Challenge Tabs */
+.manga-challenge-tabs {
+	border-bottom: 3px solid #f5f5f5;
+	margin-bottom: 0;
+}
+
+.manga-challenge-tabs .nav-item {
+	margin-bottom: -3px;
+}
+
+.manga-challenge-tabs .nav-link {
+	color: #7f8c8d;
+	border: none;
+	background: transparent;
+	padding: 0.75rem 1.5rem;
+	transition: all 0.2s ease;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-family: "Rajdhani", sans-serif;
+}
+
+.manga-challenge-tabs .nav-link:hover {
+	color: #f5f5f5;
+	background: rgba(255,255,255,0.05);
+}
+
+.manga-challenge-tabs .nav-link.active {
+	color: #f5f5f5;
+	background: rgba(255,255,255,0.1);
+	border-bottom: 3px solid #f5f5f5;
+}
+
+/* Challenge Name */
+.manga-challenge-name {
+	color: #f5f5f5;
+	font-family: "Rajdhani", sans-serif;
+	font-weight: 900;
+	font-size: 2.5rem;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+	margin-bottom: 1rem;
+	text-shadow: 3px 3px 0 #000;
+}
+
+/* Challenge Value */
+.manga-challenge-value {
+	margin-bottom: 1rem;
+}
+
+.manga-badge-points {
+	background: #f5f5f5;
+	color: #0a0a0a;
+	font-size: 1.8rem;
+	padding: 0.5rem 1.5rem;
+	border-radius: 0;
+	font-weight: 900;
+	box-shadow: 4px 4px 0 rgba(0,0,0,0.8);
+	border: 3px solid #0a0a0a;
+	display: inline-block;
+	font-family: "Rajdhani", sans-serif;
+	letter-spacing: 2px;
+}
+
+.manga-badge-points small {
+	font-size: 1rem;
+	opacity: 0.8;
+}
+
+/* Challenge Tags */
+.manga-challenge-tags {
+	margin-bottom: 1.5rem;
+}
+
+.manga-tag {
+	background: transparent;
+	color: #e0e0e0;
+	padding: 0.4rem 1rem;
+	margin: 0.25rem;
+	border-radius: 0;
+	font-size: 0.85rem;
+	font-weight: 900;
+	border: 2px solid #4a4a4a;
+	display: inline-block;
+	transition: all 0.2s ease;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.manga-tag:hover {
+	background: #f5f5f5;
+	color: #0a0a0a;
+	border-color: #f5f5f5;
+	transform: translateY(-2px);
+	box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+}
+
+/* Challenge Description */
+.manga-challenge-description {
+	background: rgba(42,42,42,0.5);
+	border-left: 4px solid #f5f5f5;
+	padding: 1rem 1.5rem;
+	margin: 1.5rem 0;
+	border-radius: 0;
+	font-weight: 600;
+	color: #e0e0e0;
+	line-height: 1.6;
+}
+
+.challenge-desc {
+	color: #e0e0e0;
+}
+
+/* Connection Info */
+.manga-challenge-connection {
+	margin: 1.5rem 0;
+}
+
+.manga-alert {
+	background: #2a2a2a;
+	border: 2px solid #4a4a4a;
+	border-radius: 0;
+	padding: 0.875rem;
+	font-weight: 700;
+	letter-spacing: 1px;
+}
+
+.manga-alert-info {
+	border-color: #b0b0b0;
+	color: #e0e0e0;
+}
+
+.manga-alert-secondary {
+	border-color: #7f8c8d;
+	color: #e0e0e0;
+}
+
+.manga-alert-warning {
+	border-color: #b0b0b0;
+	color: #e0e0e0;
+	background: repeating-linear-gradient(
+		45deg,
+		#2a2a2a,
+		#2a2a2a 10px,
+		rgba(176,176,176,0.1) 10px,
+		rgba(176,176,176,0.1) 20px
+	);
+}
+
+.manga-alert code {
+	background: #0a0a0a;
+	color: #f5f5f5;
+	padding: 0.3rem 0.6rem;
+	border-radius: 0;
+	font-size: 1rem;
+	border: 2px solid #2a2a2a;
+}
+
+/* Buttons */
+.manga-btn {
+	background: #2a2a2a;
+	border: 2px solid #4a4a4a;
+	color: #e0e0e0;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	transition: all 0.2s ease;
+	padding: 0.75rem 1rem;
+	border-radius: 0;
+	box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+	text-decoration: none;
+	display: inline-block;
+}
+
+.manga-btn:hover {
+	background: #3a3a3a;
+	border-color: #f5f5f5;
+	color: #f5f5f5;
+	transform: translate(-2px, -2px);
+	box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
+	text-decoration: none;
+}
+
+.manga-btn-hint:hover {
+	background: #f5f5f5;
+	color: #0a0a0a;
+	border-color: #f5f5f5;
+}
+
+.manga-btn-file:hover {
+	background: #b0b0b0;
+	color: #0a0a0a;
+	border-color: #b0b0b0;
+}
+
+/* Submit Section */
+.manga-submit-row {
+	margin: 2rem 0 1rem 0;
+}
+
+.manga-challenge-input {
+	background: #0a0a0a;
+	border: 3px solid #2a2a2a;
+	color: #e0e0e0;
+	height: 51px;
+	font-size: 1rem;
+	border-radius: 0;
+	transition: all 0.3s ease;
+	padding: 0.5rem 1rem;
+	font-weight: 600;
+}
+
+.manga-challenge-input:focus {
+	background: #0a0a0a;
+	border-color: #f5f5f5;
+	box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
+	color: #e0e0e0;
+	outline: none;
+}
+
+.manga-challenge-input::placeholder {
+	color: #4a4a4a;
+}
+
+.manga-btn-submit {
+	background: #f5f5f5;
+	border: 3px solid #0a0a0a;
+	color: #0a0a0a;
+	font-weight: 900;
+	height: 51px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	border-radius: 0;
+	transition: all 0.2s ease;
+	box-shadow: 4px 4px 0 rgba(0,0,0,0.8);
+}
+
+.manga-btn-submit:hover {
+	background: #fff;
+	border-color: #0a0a0a;
+	color: #0a0a0a;
+	transform: translate(-2px, -2px);
+	box-shadow: 6px 6px 0 rgba(0,0,0,0.8);
+}
+
+.manga-btn-submit:active {
+	transform: translate(1px, 1px);
+	box-shadow: 3px 3px 0 rgba(0,0,0,0.8);
+}
+
+/* Notification */
+.notification-row {
+	margin-top: 1rem;
+}
+
+#result-notification {
+	border-radius: 0;
+	font-weight: 700;
+	animation: slideIn 0.3s ease;
+}
+
+#result-notification.alert-success {
+	background: rgba(176,176,176,0.2);
+	border: 3px solid #b0b0b0;
+	color: #e0e0e0;
+}
+
+#result-notification.alert-danger {
+	background: rgba(127,140,141,0.2);
+	border: 3px solid #7f8c8d;
+	color: #e0e0e0;
+}
+
+#result-notification.alert-info {
+	background: rgba(74,74,74,0.2);
+	border: 3px solid #4a4a4a;
+	color: #e0e0e0;
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Solves Tab */
+.manga-solves-title {
+	color: #f5f5f5;
+	font-family: "Rajdhani", sans-serif;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	text-shadow: 2px 2px 0 #000;
+}
+
+.manga-solves-table {
+	background: rgba(42,42,42,0.3);
+	border: 2px solid #2a2a2a;
+	border-radius: 0;
+	overflow: hidden;
+}
+
+.manga-solves-table thead {
+	background: #2a2a2a;
+	border-bottom: 2px solid #f5f5f5;
+}
+
+.manga-solves-table thead th {
+	color: #f5f5f5;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	padding: 1rem;
+}
+
+.manga-solves-table tbody tr {
+	transition: all 0.2s ease;
+	border-bottom: 1px solid #2a2a2a;
+}
+
+.manga-solves-table tbody tr:hover {
+	background: rgba(255,255,255,0.05);
+}
+
+.manga-solves-table tbody td {
+	color: #e0e0e0;
+	border-color: #2a2a2a;
+	padding: 0.875rem;
+}
+
+/* Loading State */
+.manga-btn-submit:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.manga-btn-submit.loading::after {
+	content: "";
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-left: 10px;
+	border: 3px solid #0a0a0a;
+	border-top-color: transparent;
+	border-radius: 50%;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.manga-challenge-name {
+		font-size: 1.8rem;
+		letter-spacing: 2px;
+	}
+	
+	.manga-badge-points {
+		font-size: 1.4rem;
+		padding: 0.4rem 1rem;
+	}
+	
+	.manga-submit-row .col-md-9,
+	.manga-submit-row .col-md-3 {
+		margin-bottom: 0.5rem;
+	}
+	
+	.manga-btn-submit {
+		width: 100%;
+	}
+}
+</style>
+
+<!-- Challenge Modal Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	// Tab switching
+	const tabLinks = document.querySelectorAll('.manga-challenge-tabs .nav-link');
+	tabLinks.forEach(function(link) {
+		link.addEventListener('click', function(e) {
+			e.preventDefault();
+			const targetId = this.getAttribute('href');
+			
+			tabLinks.forEach(l => l.classList.remove('active'));
+			document.querySelectorAll('.tab-pane').forEach(pane => {
+				pane.classList.remove('show', 'active');
+			});
+			
+			this.classList.add('active');
+			const targetPane = document.querySelector(targetId);
+			if (targetPane) {
+				targetPane.classList.add('show', 'active');
+			}
+		});
+	});
+	
+	// Input validation
+	const challengeInput = document.getElementById('challenge-input');
+	if (challengeInput) {
+		challengeInput.addEventListener('input', function() {
+			if (this.value.trim() !== '') {
+				this.style.borderColor = '#f5f5f5';
+				this.style.boxShadow = '0 0 0 3px rgba(255, 255, 255, 0.1)';
+			} else {
+				this.style.borderColor = '';
+				this.style.boxShadow = '';
+			}
+		});
+	}
+	
+	// Submit button loading
+	const submitBtn = document.getElementById('challenge-submit');
+	if (submitBtn) {
+		submitBtn.addEventListener('click', function() {
+			this.classList.add('loading');
+			this.disabled = true;
+			
+			setTimeout(() => {
+				this.classList.remove('loading');
+				this.disabled = false;
+			}, 3000);
+		});
+	}
+});
+</script>

@@ -1,78 +1,763 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
+	<!-- Manga Registration Page Styles -->
+	<style>
+		/* Manga Panel - Registration Page */
+		
+		/* Hero Jumbotron */
+		.jumbotron {
+			background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+			border-bottom: 4px solid #f5f5f5;
+			border-top: 4px solid #f5f5f5;
+			border-radius: 0;
+			padding: 3rem 1rem;
+			margin-bottom: 3rem;
+			box-shadow: 
+				0 6px 0 rgba(0,0,0,0.8),
+				inset 0 0 0 1px rgba(255,255,255,0.1);
+			position: relative;
+		}
+		
+		.jumbotron::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: repeating-linear-gradient(
+				-45deg,
+				transparent,
+				transparent 20px,
+				rgba(255,255,255,0.01) 20px,
+				rgba(255,255,255,0.01) 40px
+			);
+			pointer-events: none;
+		}
+		
+		.jumbotron .container {
+			position: relative;
+			z-index: 1;
+		}
+		
+		.jumbotron h1 {
+			color: #f5f5f5;
+			font-family: "Rajdhani", sans-serif;
+			font-weight: 900;
+			font-size: 3.5rem;
+			text-transform: uppercase;
+			letter-spacing: 8px;
+			margin: 0;
+			text-shadow: 
+				3px 3px 0 #000,
+				-1px -1px 0 #000,
+				1px -1px 0 #000,
+				-1px 1px 0 #000,
+				6px 6px 0 rgba(0,0,0,0.3);
+		}
+		
+		/* Registration Container */
+		.registration-container {
+			animation: fadeInUp 0.8s ease;
+		}
+		
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		
+		/* Registration Card - Manga Panel */
+		.registration-card {
+			background: #1a1a1a;
+			border: 4px solid #2a2a2a;
+			border-radius: 0;
+			padding: 3rem 2.5rem;
+			box-shadow: 
+				8px 8px 0 rgba(0,0,0,0.5),
+				inset 0 0 0 1px rgba(255,255,255,0.05);
+			transition: all 0.3s ease;
+			position: relative;
+		}
+		
+		.registration-card::before {
+			content: "";
+			position: absolute;
+			top: -6px;
+			left: -6px;
+			right: -6px;
+			bottom: -6px;
+			border: 1px solid rgba(255,255,255,0.1);
+			pointer-events: none;
+		}
+		
+		.registration-card:hover {
+			border-color: #3a3a3a;
+			box-shadow: 
+				10px 10px 0 rgba(0,0,0,0.5),
+				inset 0 0 0 1px rgba(255,255,255,0.1);
+		}
+		
+		/* Registration Icon */
+		.registration-icon {
+			text-align: center;
+			margin-bottom: 2rem;
+			position: relative;
+		}
+		
+		.registration-icon::before {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 120px;
+			height: 120px;
+			border: 3px solid rgba(255,255,255,0.1);
+		}
+		
+		.registration-icon::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 140px;
+			height: 140px;
+			border: 2px solid rgba(255,255,255,0.05);
+		}
+		
+		/* Welcome Text */
+		.registration-welcome {
+			text-align: center;
+			margin-bottom: 2.5rem;
+			position: relative;
+			padding: 1.5rem;
+			background: repeating-linear-gradient(
+				0deg,
+				transparent,
+				transparent 4px,
+				rgba(255,255,255,0.02) 4px,
+				rgba(255,255,255,0.02) 8px
+			);
+		}
+		
+		.registration-welcome h2 {
+			color: #f5f5f5;
+			font-family: "Rajdhani", sans-serif;
+			font-weight: 900;
+			font-size: 2rem;
+			margin-bottom: 0.5rem;
+			letter-spacing: 3px;
+			text-transform: uppercase;
+			text-shadow: 2px 2px 0 #000;
+		}
+		
+		.registration-welcome p {
+			color: #b0b0b0;
+			font-size: 1rem;
+			font-weight: 600;
+			letter-spacing: 1px;
+		}
+		
+		/* Form Labels */
+		.registration-card .form-group label,
+		.registration-card .form-group b {
+			color: #f5f5f5;
+			font-weight: 900;
+			font-size: 0.9rem;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			margin-bottom: 0.5rem;
+			display: block;
+			font-family: "Rajdhani", sans-serif;
+		}
+		
+		/* Form Inputs */
+		.registration-card .form-control {
+			background: #0a0a0a;
+			border: 3px solid #2a2a2a;
+			color: #e0e0e0;
+			padding: 1rem;
+			font-size: 1rem;
+			border-radius: 0;
+			transition: all 0.3s ease;
+			height: auto;
+			font-weight: 600;
+		}
+		
+		.registration-card .form-control:focus {
+			background: #0a0a0a;
+			border-color: #f5f5f5;
+			box-shadow: 
+				0 0 0 3px rgba(255,255,255,0.1),
+				inset 0 0 10px rgba(255,255,255,0.05);
+			color: #e0e0e0;
+			outline: none;
+		}
+		
+		.registration-card .form-control:hover {
+			border-color: #3a3a3a;
+		}
+		
+		.registration-card .form-control::placeholder {
+			color: #4a4a4a;
+			font-weight: 500;
+		}
+		
+		/* Form Group Spacing */
+		.registration-card .form-group {
+			margin-bottom: 2rem;
+		}
+		
+		/* Help Text */
+		.registration-card .form-text {
+			color: #7f8c8d;
+			font-size: 0.8rem;
+			margin-top: 0.5rem;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+		}
+		
+		/* OAuth Registration Button */
+		.btn-secondary.btn-lg {
+			background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+			border: 3px solid #2a2a2a;
+			color: #e0e0e0;
+			padding: 1rem 2rem;
+			font-size: 1.1rem;
+			font-weight: 900;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			border-radius: 0;
+			transition: all 0.2s ease;
+			box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+		}
+		
+		.btn-secondary.btn-lg:hover {
+			background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+			border-color: #f5f5f5;
+			color: #f5f5f5;
+			transform: translate(-2px, -2px);
+			box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+		}
+		
+		/* Divider */
+		.registration-card hr {
+			border-top: 3px solid #2a2a2a;
+			margin: 2.5rem 0;
+			position: relative;
+		}
+		
+		.registration-card hr::after {
+			content: "OR";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: #1a1a1a;
+			padding: 0 1rem;
+			color: #7f8c8d;
+			font-weight: 900;
+			letter-spacing: 2px;
+		}
+		
+		/* Submit Button */
+		.registration-card .btn-primary {
+			background: #f5f5f5;
+			border: 3px solid #0a0a0a;
+			color: #0a0a0a;
+			padding: 0.875rem 2rem;
+			font-size: 1rem;
+			font-weight: 900;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			border-radius: 0;
+			transition: all 0.2s ease;
+			box-shadow: 4px 4px 0 rgba(0,0,0,0.8);
+		}
+		
+		.registration-card .btn-primary:hover {
+			background: #fff;
+			border-color: #0a0a0a;
+			color: #0a0a0a;
+			transform: translate(-2px, -2px);
+			box-shadow: 6px 6px 0 rgba(0,0,0,0.8);
+		}
+		
+		.registration-card .btn-primary:active {
+			transform: translate(1px, 1px);
+			box-shadow: 3px 3px 0 rgba(0,0,0,0.8);
+		}
+		
+		/* Terms and Privacy Links */
+		.text-muted a {
+			color: #b0b0b0;
+			text-decoration: none;
+			font-weight: 700;
+			transition: all 0.3s ease;
+			border-bottom: 2px solid transparent;
+		}
+		
+		.text-muted a:hover {
+			color: #f5f5f5;
+			text-decoration: none;
+			border-bottom-color: #f5f5f5;
+		}
+		
+		/* Privacy Notice */
+		.privacy-notice {
+			text-align: center;
+			margin-top: 2rem;
+			padding: 1.5rem;
+			background: repeating-linear-gradient(
+				45deg,
+				transparent,
+				transparent 10px,
+				rgba(255,255,255,0.02) 10px,
+				rgba(255,255,255,0.02) 20px
+			);
+			border: 2px solid #2a2a2a;
+		}
+		
+		/* Loading State */
+		.btn-primary.loading {
+			opacity: 0.6;
+			cursor: not-allowed;
+			pointer-events: none;
+		}
+		
+		.btn-primary.loading::after {
+			content: "";
+			display: inline-block;
+			width: 14px;
+			height: 14px;
+			margin-left: 10px;
+			border: 3px solid #0a0a0a;
+			border-top-color: transparent;
+			border-radius: 50%;
+			animation: btnSpin 0.8s linear infinite;
+		}
+		
+		@keyframes btnSpin {
+			to { transform: rotate(360deg); }
+		}
+		
+		/* Input Validation States */
+		.form-control.is-valid {
+			border-color: #b0b0b0;
+		}
+		
+		.form-control.is-invalid {
+			border-color: #7f8c8d;
+			background: repeating-linear-gradient(
+				45deg,
+				#0a0a0a,
+				#0a0a0a 10px,
+				rgba(127,140,141,0.1) 10px,
+				rgba(127,140,141,0.1) 20px
+			);
+		}
+		
+		/* Password Strength Indicator */
+		.password-strength {
+			height: 6px;
+			background: #0a0a0a;
+			border: 2px solid #2a2a2a;
+			margin-top: 0.5rem;
+			display: none;
+			overflow: hidden;
+		}
+		
+		.password-strength-bar {
+			height: 100%;
+			width: 0;
+			transition: width 0.3s ease, background 0.3s ease;
+		}
+		
+		.password-strength.weak .password-strength-bar {
+			width: 33%;
+			background: repeating-linear-gradient(
+				90deg,
+				#7f8c8d 0px,
+				#7f8c8d 4px,
+				#6f7c7d 4px,
+				#6f7c7d 8px
+			);
+		}
+		
+		.password-strength.medium .password-strength-bar {
+			width: 66%;
+			background: repeating-linear-gradient(
+				90deg,
+				#b0b0b0 0px,
+				#b0b0b0 4px,
+				#a0a0a0 4px,
+				#a0a0a0 8px
+			);
+		}
+		
+		.password-strength.strong .password-strength-bar {
+			width: 100%;
+			background: repeating-linear-gradient(
+				90deg,
+				#f5f5f5 0px,
+				#f5f5f5 4px,
+				#e0e0e0 4px,
+				#e0e0e0 8px
+			);
+		}
+		
+		.password-strength-text {
+			display: none;
+			font-size: 0.8rem;
+			margin-top: 0.5rem;
+			font-weight: 700;
+			letter-spacing: 1px;
+		}
+		
+		.password-strength.weak ~ .password-strength-text {
+			color: #7f8c8d;
+		}
+		
+		.password-strength.medium ~ .password-strength-text {
+			color: #b0b0b0;
+		}
+		
+		.password-strength.strong ~ .password-strength-text {
+			color: #f5f5f5;
+		}
+		
+		/* Error Messages */
+		.alert {
+			border-radius: 0;
+			border: 3px solid;
+			font-weight: 700;
+			animation: slideIn 0.3s ease;
+			letter-spacing: 1px;
+		}
+		
+		@keyframes slideIn {
+			from {
+				opacity: 0;
+				transform: translateY(-10px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		
+		.alert-danger {
+			background: rgba(127,140,141,0.2);
+			border-color: #7f8c8d;
+			color: #e0e0e0;
+		}
+		
+		.alert-success {
+			background: rgba(176,176,176,0.2);
+			border-color: #b0b0b0;
+			color: #e0e0e0;
+		}
+		
+		/* Password Toggle Button */
+		.password-toggle {
+			position: absolute;
+			right: 15px;
+			top: 50%;
+			transform: translateY(-50%);
+			background: none;
+			border: none;
+			color: #7f8c8d;
+			cursor: pointer;
+			transition: color 0.3s ease;
+			font-size: 1.2rem;
+			z-index: 10;
+		}
+		
+		.password-toggle:hover {
+			color: #f5f5f5;
+		}
+		
+		/* Responsive Design */
+		@media (max-width: 768px) {
+			.jumbotron h1 {
+				font-size: 2.5rem;
+				letter-spacing: 4px;
+			}
+			
+			.registration-card {
+				padding: 2rem 1.5rem;
+			}
+			
+			.registration-card .btn-primary,
+			.btn-secondary.btn-lg {
+				width: 100%;
+				margin-top: 0.5rem;
+			}
+		}
+	</style>
 {% endblock %}
 
 {% block content %}
+<!-- Hero Jumbotron -->
 <div class="jumbotron">
 	<div class="container">
-		<h1>Register</h1>
+		<h1>REGISTER</h1>
 	</div>
 </div>
-<div class="container">
+
+<!-- Registration Container -->
+<div class="container registration-container">
 	<div class="row">
 		<div class="col-md-6 offset-md-3">
-			{% include "components/errors.html" %}
-
-			{% if integrations.mlc() %}
-			<a class="btn btn-secondary btn-lg btn-block" href="{{ url_for('auth.oauth_login') }}">
-				Login with Major League Cyber
-			</a>
-
-			<hr>
-			{% endif %}
-
-			{% with form = Forms.auth.RegistrationForm() %}
-			{% from "macros/forms.html" import render_extra_fields %}
-			<form method="post" accept-charset="utf-8" autocomplete="off" role="form">
-				<div class="form-group">
-					<b>{{ form.name.label }}</b>
-					{{ form.name(class="form-control", value=name) }}
-					<small class="form-text text-muted">
-						Your username on the site
-					</small>
+			<div class="registration-card">
+				<!-- Registration Icon -->
+				<div class="registration-icon">
+					<svg width="80" height="80" viewBox="0 0 80 80" style="filter: drop-shadow(2px 2px 0 #000);">
+						<rect x="15" y="10" width="50" height="60" fill="none" stroke="#f5f5f5" stroke-width="3"/>
+						<line x1="25" y1="25" x2="55" y2="25" stroke="#f5f5f5" stroke-width="2"/>
+						<line x1="25" y1="35" x2="55" y2="35" stroke="#f5f5f5" stroke-width="2"/>
+						<line x1="25" y1="45" x2="55" y2="45" stroke="#f5f5f5" stroke-width="2"/>
+						<line x1="25" y1="55" x2="45" y2="55" stroke="#f5f5f5" stroke-width="2"/>
+					</svg>
 				</div>
-				<div class="form-group">
-					<b>{{ form.email.label }}</b>
-					{{ form.email(class="form-control", value=email) }}
-					<small class="form-text text-muted">
-						Never shown to the public
-					</small>
+				
+				<!-- Welcome Text -->
+				<div class="registration-welcome">
+					<h2>Join the Challenge</h2>
+					<p>Create your account to begin</p>
 				</div>
-				<div class="form-group">
-					<b>{{ form.password.label }}</b>
-					{{ form.password(class="form-control", value=password) }}
-					<small class="form-text text-muted">
-						Password used to log into your account
-					</small>
-				</div>
-				{{ form.nonce() }}
+				
+				<!-- Error Messages -->
+				{% include "components/errors.html" %}
 
-				{{ render_extra_fields(form.extra) }}
+				<!-- OAuth Registration (if enabled) -->
+				{% if integrations.mlc() %}
+				<a class="btn btn-secondary btn-lg btn-block" href="{{ url_for('auth.oauth_login') }}">
+					Register with Major League Cyber
+				</a>
 
-				<div class="row pt-3">
-					<div class="col-md-12">
-						{{ form.submit(class="btn btn-md btn-primary btn-outlined float-right") }}
+				<hr>
+				{% endif %}
+
+				<!-- Registration Form -->
+				{% with form = Forms.auth.RegistrationForm() %}
+				{% from "macros/forms.html" import render_extra_fields %}
+				<form method="post" accept-charset="utf-8" autocomplete="off" role="form" id="registration-form">
+					<div class="form-group">
+						<b>{{ form.name.label }}</b>
+						{{ form.name(class="form-control", value=name, placeholder="Username") }}
+						<small class="form-text text-muted">
+							Your username on the site
+						</small>
 					</div>
-				</div>
+					
+					<div class="form-group">
+						<b>{{ form.email.label }}</b>
+						{{ form.email(class="form-control", value=email, placeholder="Email Address") }}
+						<small class="form-text text-muted">
+							Never shown to the public
+						</small>
+					</div>
+					
+					<div class="form-group">
+						<b>{{ form.password.label }}</b>
+						<div style="position: relative;">
+							{{ form.password(class="form-control", value=password, placeholder="Password") }}
+						</div>
+						<div class="password-strength" id="password-strength">
+							<div class="password-strength-bar"></div>
+						</div>
+						<small class="password-strength-text" id="password-strength-text"></small>
+						<small class="form-text text-muted">
+							Password used to log in
+						</small>
+					</div>
+					
+					{{ form.nonce() }}
 
-				{% if Configs.tos_or_privacy %}
-				<div class="row pt-3">
-					<div class="col-md-12 text-center">
+					<!-- Extra Fields (if any) -->
+					{% if form.extra %}
+					<div class="extra-fields">
+						{{ render_extra_fields(form.extra) }}
+					</div>
+					{% endif %}
+
+					<div class="row pt-3">
+						<div class="col-md-12">
+							{{ form.submit(class="btn btn-md btn-primary btn-outlined float-right", id="register-submit") }}
+						</div>
+					</div>
+
+					<!-- Terms and Privacy -->
+					{% if Configs.tos_or_privacy %}
+					<div class="privacy-notice">
 						<small class="text-muted text-center">
 							By registering, you agree to the
 							<a href="{{ Configs.privacy_link }}" rel="noopener" target="_blank">privacy policy</a>
 							and <a href="{{ Configs.tos_link }}" rel="noopener" target="_blank">terms of service</a>
 						</small>
 					</div>
-				</div>
-				{% endif %}
-			</form>
-			{% endwith %}
+					{% endif %}
+				</form>
+				{% endwith %}
+			</div>
 		</div>
 	</div>
 </div>
 {% endblock %}
 
 {% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	const form = document.getElementById('registration-form');
+	const submitBtn = document.getElementById('register-submit');
+	const inputs = form.querySelectorAll('.form-control');
+	const passwordInput = form.querySelector('input[name="password"]');
+	const usernameInput = form.querySelector('input[name="name"]');
+	const emailInput = form.querySelector('input[name="email"]');
+	
+	// Password strength checker
+	if (passwordInput) {
+		const strengthIndicator = document.getElementById('password-strength');
+		const strengthText = document.getElementById('password-strength-text');
+		
+		passwordInput.addEventListener('input', function() {
+			const password = this.value;
+			const strength = calculatePasswordStrength(password);
+			
+			if (password.length > 0) {
+				strengthIndicator.style.display = 'block';
+				strengthIndicator.className = 'password-strength ' + strength.level;
+				strengthText.textContent = strength.text;
+				strengthText.style.display = 'block';
+			} else {
+				strengthIndicator.style.display = 'none';
+				strengthText.style.display = 'none';
+			}
+		});
+	}
+	
+	function calculatePasswordStrength(password) {
+		let score = 0;
+		
+		if (password.length >= 8) score++;
+		if (password.length >= 12) score++;
+		if (/[a-z]/.test(password)) score++;
+		if (/[A-Z]/.test(password)) score++;
+		if (/[0-9]/.test(password)) score++;
+		if (/[^a-zA-Z0-9]/.test(password)) score++;
+		
+		if (score <= 2) {
+			return { level: 'weak', text: 'Weak password' };
+		} else if (score <= 4) {
+			return { level: 'medium', text: 'Medium strength' };
+		} else {
+			return { level: 'strong', text: 'Strong password' };
+		}
+	}
+	
+	// Real-time input validation
+	if (usernameInput) {
+		usernameInput.addEventListener('blur', function() {
+			const username = this.value.trim();
+			if (username.length >= 3) {
+				this.classList.add('is-valid');
+				this.classList.remove('is-invalid');
+			} else if (username.length > 0) {
+				this.classList.add('is-invalid');
+				this.classList.remove('is-valid');
+			}
+		});
+	}
+	
+	if (emailInput) {
+		emailInput.addEventListener('blur', function() {
+			const email = this.value.trim();
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (emailRegex.test(email)) {
+				this.classList.add('is-valid');
+				this.classList.remove('is-invalid');
+			} else if (email.length > 0) {
+				this.classList.add('is-invalid');
+				this.classList.remove('is-valid');
+			}
+		});
+	}
+	
+	// Clear validation on input
+	inputs.forEach(function(input) {
+		input.addEventListener('input', function() {
+			if (!this.classList.contains('is-valid') && !this.classList.contains('is-invalid')) {
+				return;
+			}
+			this.classList.remove('is-valid', 'is-invalid');
+		});
+	});
+	
+	// Add loading state on form submission
+	form.addEventListener('submit', function(e) {
+		let isValid = true;
+		
+		if (usernameInput && usernameInput.value.trim().length < 3) {
+			usernameInput.classList.add('is-invalid');
+			isValid = false;
+		}
+		
+		if (emailInput) {
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test(emailInput.value.trim())) {
+				emailInput.classList.add('is-invalid');
+				isValid = false;
+			}
+		}
+		
+		if (passwordInput && passwordInput.value.length < 6) {
+			passwordInput.classList.add('is-invalid');
+			isValid = false;
+		}
+		
+		if (isValid) {
+			submitBtn.classList.add('loading');
+			submitBtn.disabled = true;
+		} else {
+			e.preventDefault();
+		}
+	});
+	
+	// Password visibility toggle
+	if (passwordInput) {
+		const toggleBtn = document.createElement('button');
+		toggleBtn.type = 'button';
+		toggleBtn.className = 'password-toggle';
+		toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+		
+		passwordInput.parentNode.appendChild(toggleBtn);
+		
+		toggleBtn.addEventListener('click', function() {
+			if (passwordInput.type === 'password') {
+				passwordInput.type = 'text';
+				this.innerHTML = '<i class="fas fa-eye-slash"></i>';
+			} else {
+				passwordInput.type = 'password';
+				this.innerHTML = '<i class="fas fa-eye"></i>';
+			}
+		});
+	}
+	
+	// Focus first input
+	if (usernameInput) {
+		setTimeout(function() {
+			usernameInput.focus();
+		}, 300);
+	}
+});
+</script>
 {% endblock %}
