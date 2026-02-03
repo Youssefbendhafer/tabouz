@@ -1,16 +1,21 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
     <div class="container">
         <a href="{{ url_for('views.static_html', route='/') }}" class="navbar-brand">
             {% if Configs.ctf_logo %}
-                <img class="img-responsive ctf_logo" src="{{ url_for('views.files', path=Configs.ctf_logo) }}" height="25" alt="{{ Configs.ctf_name }}">
+                <img class="img-responsive ctf_logo"
+                     src="{{ url_for('views.files', path=Configs.ctf_logo) }}"
+                     height="30"
+                     alt="{{ Configs.ctf_name }}">
             {% else %}
                 {{ Configs.ctf_name }}
             {% endif %}
         </a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#base-navbars"
                 aria-controls="base-navbars" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="base-navbars">
             <ul class="navbar-nav mr-auto">
                 {% for page in Plugins.user_menu_pages %}
@@ -24,9 +29,9 @@
                         <a class="nav-link" href="{{ url_for('users.listing') }}">Users</a>
                     </li>
                     {% if Configs.user_mode == 'teams' %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('teams.listing') }}">Teams</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('teams.listing') }}">Teams</a>
+                        </li>
                     {% endif %}
                 {% endif %}
 
@@ -48,90 +53,55 @@
                     {% if is_admin() %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('admin.view') }}">
-                                <span class="d-block" data-toggle="tooltip" data-placement="bottom" title="Admin Panel">
-                                    <i class="fas fa-wrench d-none d-md-block d-lg-none"></i>
-                                </span>
-                                <span class="d-sm-block d-md-none d-lg-block">
-                                    <i class="fas fa-wrench pr-1"></i>Admin Panel
-                                </span>
+                                <i class="fas fa-wrench pr-1"></i>Admin
                             </a>
                         </li>
                     {% endif %}
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('views.notifications') }}">
-                            <span class="d-block" data-toggle="tooltip" data-placement="bottom" title="Notifications">
-                                <i class="fas fa-bell d-none d-md-block d-lg-none"></i>
-                            </span>
-                            <span class="d-sm-block d-md-none d-lg-block">
-                                <i class="fas fa-bell pr-1"></i>
-                                <span class="badge badge-pill badge-danger badge-notification"></span>
-                                Notifications
-                            </span>
+                            <i class="fas fa-bell pr-1"></i>
+                            <span class="badge badge-pill badge-danger badge-notification"></span>
+                            Notifications
                         </a>
                     </li>
+
                     {% if Configs.user_mode == "teams" %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('teams.private') }}">
-                            <span class="d-block" data-toggle="tooltip" data-placement="bottom" title="Team">
-                                <i class="fas fa-users d-none d-md-block d-lg-none"></i>
-                            </span>
-                            <span class="d-sm-block d-md-none d-lg-block">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('teams.private') }}">
                                 <i class="fas fa-users pr-1"></i>Team
-                            </span>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
                     {% endif %}
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('users.private') }}">
-                            <span class="d-block" data-toggle="tooltip" data-placement="bottom" title="Profile">
-                                <i class="fas fa-user-circle d-none d-md-block d-lg-none"></i>
-                            </span>
-                            <span class="d-sm-block d-md-none d-lg-block">
-                                <i class="fas fa-user-circle pr-1"></i>Profile
-                            </span>
+                            <i class="fas fa-user-circle pr-1"></i>Profile
                         </a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('views.settings') }}">
-                            <span class="d-block" data-toggle="tooltip" data-placement="bottom" title="Settings">
-                                <i class="fas fa-cogs d-none d-md-block d-lg-none"></i>
-                            </span>
-                            <span class="d-sm-block d-md-none d-lg-block">
-                                <i class="fas fa-cogs pr-1"></i>Settings
-                            </span>
+                            <i class="fas fa-cogs pr-1"></i>Settings
                         </a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.logout') }}">
-                            <span class="d-block" data-toggle="tooltip" data-placement="bottom" title="Logout">
-                                <i class="fas fa-sign-out-alt d-none d-md-block d-lg-none"></i>
-                            </span>
-                            <span class="d-sm-block d-md-none d-lg-block">
-                                <i class="fas fa-sign-out-alt pr-1"></i><span class="d-lg-none">Logout</span>
-                            </span>
+                            <i class="fas fa-sign-out-alt pr-1"></i>Logout
                         </a>
                     </li>
                 {% else %}
                     {% if registration_visible() %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('auth.register') }}">
-                                <span class="d-block" data-toggle="tooltip" data-placement="bottom" title="Register">
-                                    <i class="fas fa-user-plus d-none d-md-block d-lg-none"></i>
-                                </span>
-                                <span class="d-sm-block d-md-none d-lg-block">
-                                    <i class="fas fa-user-plus pr-1"></i>Register
-                                </span>
+                                <i class="fas fa-user-plus pr-1"></i>Register
                             </a>
                         </li>
                     {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.login') }}">
-                            <span class="d-block" data-toggle="tooltip" data-placement="bottom" title="Login">
-                                <i class="fas fa-sign-in-alt d-none d-md-block d-lg-none"></i>
-                            </span>
-                            <span class="d-sm-block d-md-none d-lg-block">
-                                <i class="fas fa-sign-in-alt pr-1"></i>Login
-                            </span>
+                            <i class="fas fa-sign-in-alt pr-1"></i>Login
                         </a>
                     </li>
                 {% endif %}
@@ -139,3 +109,71 @@
         </div>
     </div>
 </nav>
+
+<style>
+/* Compact Glass Navbar */
+.navbar {
+	background: linear-gradient(
+		180deg,
+		rgba(10, 10, 10, 0.95) 0%,
+		rgba(10, 10, 10, 0.75) 60%,
+		rgba(10, 10, 10, 0) 100%
+	) !important;
+	backdrop-filter: blur(6px);
+	border: none !important;
+	box-shadow: none !important;
+	padding: 0.5rem 0 1rem 0 !important;
+	min-height: 64px;
+}
+
+.navbar .container {
+	position: relative;
+	z-index: 10;
+}
+
+.navbar-brand {
+	color: #f5f5f5 !important;
+	font-weight: 700;
+	font-size: 1.25rem;
+}
+
+.navbar-nav {
+	margin-top: 0.25rem;
+}
+
+.navbar-nav .nav-link {
+	color: #e0e0e0 !important;
+	font-size: 0.95rem;
+	font-weight: 500;
+	padding: 0.35rem 0.9rem;
+}
+
+.navbar-nav .nav-link:hover {
+	color: #ffffff !important;
+}
+
+.navbar-nav .nav-link i {
+	font-size: 1rem;
+}
+
+.navbar-toggler {
+	border: none;
+	padding: 0.4rem;
+}
+
+.badge-notification {
+	background: #dc3545;
+}
+
+hr {
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	margin: 0.8rem 0;
+}
+
+@media (max-width: 768px) {
+	.navbar {
+		padding: 0.45rem 0 0.8rem 0 !important;
+		min-height: auto;
+	}
+}
+</style>

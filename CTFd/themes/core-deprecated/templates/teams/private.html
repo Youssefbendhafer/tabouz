@@ -1,6 +1,111 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
+<style>
+.jumbotron {
+	background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+	border-bottom: 4px solid #f5f5f5;
+	border-top: 4px solid #f5f5f5;
+	padding: 3rem 1rem;
+	margin-bottom: 3rem;
+	box-shadow: 0 6px 0 rgba(0,0,0,0.8);
+}
+
+.jumbotron h1, .jumbotron h2, .jumbotron h3 {
+	color: #f5f5f5;
+	font-family: "Rajdhani", sans-serif;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	text-shadow: 2px 2px 0 #000;
+}
+
+.badge {
+	background: #2a2a2a;
+	color: #e0e0e0;
+	border: 2px solid #3a3a3a;
+	border-radius: 0;
+	font-weight: 900;
+	padding: 0.5rem 1rem;
+}
+
+.badge-primary {
+	background: #f5f5f5;
+	color: #0a0a0a;
+	border-color: #0a0a0a;
+}
+
+.btn-fa {
+	color: #e0e0e0;
+	transition: all 0.2s ease;
+}
+
+.btn-fa:hover {
+	color: #f5f5f5;
+	transform: scale(1.1);
+}
+
+.btn-fa.fa-disabled {
+	color: #4a4a4a;
+	cursor: not-allowed;
+}
+
+h3 {
+	color: #f5f5f5;
+	font-weight: 900;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+}
+
+.modal-content {
+	background: #1a1a1a;
+	border: 3px solid #2a2a2a;
+	border-radius: 0;
+	box-shadow: 6px 6px 0 rgba(0,0,0,0.8);
+}
+
+.modal-header {
+	background: #2a2a2a;
+	border-bottom: 3px solid #f5f5f5;
+	border-radius: 0;
+}
+
+.modal-header h2 {
+	color: #f5f5f5;
+	font-family: "Rajdhani", sans-serif;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+
+.modal-header .close {
+	color: #e0e0e0;
+	font-size: 2rem;
+	font-weight: 900;
+	opacity: 1;
+}
+
+.modal-header .close:hover {
+	color: #f5f5f5;
+	transform: rotate(90deg);
+}
+
+.modal-body {
+	background: #1a1a1a;
+}
+
+.modal-body .form-group label,
+.modal-body .form-group b {
+	color: #f5f5f5;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.spinner {
+	color: #f5f5f5;
+}
+</style>
 {% endblock %}
 
 {% block content %}

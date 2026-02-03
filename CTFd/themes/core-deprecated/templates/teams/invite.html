@@ -1,6 +1,63 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
+<style>
+.jumbotron {
+	background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+	border-bottom: 4px solid #f5f5f5;
+	border-top: 4px solid #f5f5f5;
+	padding: 3rem 1rem;
+	margin-bottom: 3rem;
+	box-shadow: 0 6px 0 rgba(0,0,0,0.8);
+}
+
+.jumbotron h1 {
+	color: #f5f5f5;
+	font-family: "Rajdhani", sans-serif;
+	font-weight: 900;
+	font-size: 3rem;
+	text-transform: uppercase;
+	letter-spacing: 6px;
+	text-shadow: 3px 3px 0 #000;
+}
+
+.manga-card {
+	background: rgba(26, 26, 26, 0.95);
+	border: 3px solid #2a2a2a;
+	padding: 3rem 2rem;
+	box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+	text-align: center;
+}
+
+.manga-card p {
+	color: #e0e0e0;
+	font-size: 1.1rem;
+	margin-bottom: 1.5rem;
+}
+
+.manga-card strong {
+	color: #f5f5f5;
+	font-weight: 900;
+	letter-spacing: 1px;
+}
+
+.btn-success {
+	background: #f5f5f5 !important;
+	color: #0a0a0a !important;
+	border: 3px solid #0a0a0a !important;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	padding: 1rem 2rem;
+	box-shadow: 4px 4px 0 rgba(0,0,0,0.8);
+}
+
+.btn-success:hover {
+	background: #fff !important;
+	transform: translate(-2px, -2px);
+	box-shadow: 6px 6px 0 rgba(0,0,0,0.8);
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -14,28 +71,30 @@
 			<div class="col-md-6 offset-md-3">
 				{% include "components/errors.html" %}
 
-				<p class="text-center">
-					Welcome to <strong>{{ team.name }}</strong>!
-				</p>
+				<div class="manga-card">
+					<p>
+						Welcome to <strong>{{ team.name }}</strong>!
+					</p>
 
-				<p class="text-center">
-					Click the button below to join the team!
-					<br>
-					<small class="text-muted">
-						Or <a href="{{ url_for('teams.new') }}">click here</a> if you'd prefer to create your own team.
-					</small>
-				</p>
+					<p>
+						Click the button below to join the team!
+						<br>
+						<small class="text-muted">
+							Or <a href="{{ url_for('teams.new') }}">click here</a> if you'd prefer to create your own team.
+						</small>
+					</p>
 
-				{% with form = Forms.teams.TeamInviteJoinForm() %}
-				<form method="POST">
-					<div class="row pt-3 text-center">
-						<div class="col-md-12">
-							{{ form.submit(class="btn btn-success btn-block") }}
+					{% with form = Forms.teams.TeamInviteJoinForm() %}
+					<form method="POST">
+						<div class="row pt-3 text-center">
+							<div class="col-md-12">
+								{{ form.submit(class="btn btn-success btn-block") }}
+							</div>
 						</div>
-					</div>
-					{{ form.nonce() }}
-				</form>
-				{% endwith %}
+						{{ form.nonce() }}
+					</form>
+					{% endwith %}
+				</div>
 			</div>
 		</div>
 	</div>
