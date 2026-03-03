@@ -2,7 +2,7 @@
     <div class="container">
         <a href="{{ url_for('views.static_html', route='/') }}" class="navbar-brand">
             {% if Configs.ctf_logo %}
-                <img class="img-responsive ctf_logo" src="{{ url_for('views.files', path=Configs.ctf_logo) }}" height="30" alt="{{ Configs.ctf_name }}">
+                <img class="img-responsive ctf_logo" src="{{ url_for('views.files', path=Configs.ctf_logo) }}" height="50" alt="{{ Configs.ctf_name }}">
             {% else %}
                 <span class="brand-text">{{ Configs.ctf_name }}</span>
             {% endif %}
@@ -106,7 +106,7 @@
     backdrop-filter: blur(10px);
     border-bottom: 2px solid #00d9ff;
     box-shadow: 0 2px 20px rgba(0, 217, 255, 0.3);
-    padding: 0.4rem 0;
+    padding: 0.75rem 0;
     position: relative;
     overflow: hidden;
 }

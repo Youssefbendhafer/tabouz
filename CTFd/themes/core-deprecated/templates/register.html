@@ -1,504 +1,610 @@
 {% extends "base.html" %}
 
-{% block stylesheets %}
-	<!-- Cyber Register Page Styles -->
-	<style>
-		/* CYBERSEC NEON REGISTER PAGE */
-		
-		/* Hero Section */
-		.jumbotron {
-			background: linear-gradient(135deg, #0a0a1e 0%, #1a0a2e 100%);
-			border-bottom: 3px solid #00f0ff;
-			border-radius: 0;
-			padding: 2.5rem 1rem;
-			margin-bottom: 3rem;
-			box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3), 0 0 40px rgba(138, 43, 226, 0.2);
-			position: relative;
-			overflow: hidden;
-		}
-		
-		.jumbotron::before {
-			content: "";
-			position: absolute;
-			top: -50%;
-			right: -50%;
-			width: 200%;
-			height: 200%;
-			background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
-			animation: pulse-glow 4s ease-in-out infinite;
-		}
-		
-		@keyframes pulse-glow {
-			0%, 100% { transform: scale(1); opacity: 0.5; }
-			50% { transform: scale(1.1); opacity: 0.8; }
-		}
-		
-		.jumbotron .container {
-			position: relative;
-			z-index: 1;
-		}
-		
-		.jumbotron h1 {
-			color: #00f0ff;
-			font-family: "Orbitron", "Rajdhani", sans-serif;
-			font-weight: 700;
-			font-size: 3rem;
-			text-transform: uppercase;
-			letter-spacing: 4px;
-			margin: 0;
-			text-shadow: 0 0 20px rgba(0, 240, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.5);
-		}
-		
-		.jumbotron h1 i {
-			color: #8a2be2;
-			margin-right: 1rem;
-		}
-		
-		/* Register Card */
-		.register-card {
-			background: linear-gradient(135deg, #0a0a1e 0%, #1a0a2e 100%);
-			border: 2px solid rgba(0, 240, 255, 0.4);
-			border-radius: 12px;
-			padding: 3rem 2.5rem;
-			margin: 2rem auto;
-			max-width: 550px;
-			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 240, 255, 0.2);
-			position: relative;
-			overflow: hidden;
-		}
-		
-		.register-card::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 3px;
-			background: linear-gradient(90deg, transparent, #00f0ff, #8a2be2, transparent);
-			animation: border-flow 3s linear infinite;
-		}
-		
-		@keyframes border-flow {
-			0% { transform: translateX(-100%); }
-			100% { transform: translateX(100%); }
-		}
-		
-		.register-card:hover {
-			border-color: #00f0ff;
-			box-shadow: 0 12px 40px rgba(0, 240, 255, 0.3), 0 0 80px rgba(138, 43, 226, 0.3);
-		}
-		
-		/* Card Icon */
-		.register-icon {
-			text-align: center;
-			margin-bottom: 2rem;
-		}
-		
-		.register-icon i {
-			font-size: 4rem;
-			color: #8a2be2;
-			filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.8));
-			animation: float-icon 3s ease-in-out infinite;
-		}
-		
-		@keyframes float-icon {
-			0%, 100% { transform: translateY(0) rotate(0deg); }
-			50% { transform: translateY(-10px) rotate(5deg); }
-		}
-		
-		/* Welcome Text */
-		.welcome-text {
-			text-align: center;
-			margin-bottom: 2rem;
-		}
-		
-		.welcome-text h2 {
-			color: #00f0ff;
-			font-family: "Orbitron", sans-serif;
-			font-size: 1.8rem;
-			margin-bottom: 0.5rem;
-		}
-		
-		.welcome-text p {
-			color: #a0d8ef;
-			font-size: 0.95rem;
-		}
-		
-		/* Form Labels */
-		.form-label {
-			color: #00bfff;
-			font-family: "Orbitron", sans-serif;
-			font-size: 0.85rem;
-			font-weight: 600;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-			margin-bottom: 0.5rem;
-			display: block;
-		}
-		
-		/* Input Fields */
-		.form-control {
-			background: rgba(10, 10, 30, 0.6);
-			border: 2px solid rgba(0, 240, 255, 0.3);
-			border-radius: 6px;
-			color: #a0d8ef;
-			font-size: 1rem;
-			padding: 0.875rem 1rem;
-			transition: all 0.3s ease;
-		}
-		
-		.form-control:focus {
-			background: rgba(10, 10, 30, 0.8);
-			border-color: #00f0ff;
-			color: #00f0ff;
-			box-shadow: 0 0 0 0.2rem rgba(0, 240, 255, 0.15), 0 0 30px rgba(0, 240, 255, 0.4);
-			outline: none;
-		}
-		
-		.form-control:hover {
-			border-color: #00bfff;
-		}
-		
-		.form-control::placeholder {
-			color: rgba(160, 216, 239, 0.4);
-		}
-		
-		/* Input Wrapper */
-		.input-wrapper {
-			position: relative;
-			margin-bottom: 1.5rem;
-		}
-		
-		.input-icon {
-			position: absolute;
-			left: 15px;
-			top: 50%;
-			transform: translateY(-50%);
-			color: #8a2be2;
-			font-size: 1rem;
-			z-index: 10;
-			transition: all 0.3s ease;
-		}
-		
-		.input-wrapper input {
-			padding-left: 45px;
-		}
-		
-		.form-control:focus ~ .input-icon {
-			color: #00f0ff;
-		}
-		
-		/* Help Text */
-		.help-text {
-			color: rgba(160, 216, 239, 0.6);
-			font-size: 0.8rem;
-			margin-top: 0.25rem;
-			margin-left: 45px;
-		}
-		
-		/* Password Strength */
-		.password-strength {
-			margin-top: 0.75rem;
-			margin-left: 45px;
-		}
-		
-		.strength-bar {
-			height: 4px;
-			background: rgba(10, 10, 30, 0.8);
-			border-radius: 2px;
-			overflow: hidden;
-			margin-bottom: 0.5rem;
-		}
-		
-		.strength-fill {
-			height: 100%;
-			width: 0;
-			transition: all 0.3s ease;
-			background: linear-gradient(90deg, #ff006e, #ff8800, #00f0ff);
-		}
-		
-		.strength-text {
-			font-size: 0.75rem;
-			font-weight: 600;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-		}
-		
-		.strength-weak { color: #ff006e; }
-		.strength-medium { color: #ff8800; }
-		.strength-strong { color: #00f0ff; }
-		
-		/* Password Toggle */
-		.password-toggle {
-			position: absolute;
-			right: 15px;
-			top: 50%;
-			transform: translateY(-50%);
-			background: none;
-			border: none;
-			color: #8a2be2;
-			cursor: pointer;
-			font-size: 1.1rem;
-			z-index: 10;
-			transition: all 0.3s ease;
-		}
-		
-		.password-toggle:hover {
-			color: #00f0ff;
-		}
-		
-		/* Submit Button */
-		.btn-register {
-			background: linear-gradient(135deg, #8a2be2 0%, #00f0ff 100%);
-			border: 2px solid #8a2be2;
-			border-radius: 8px;
-			color: #fff;
-			font-family: "Orbitron", sans-serif;
-			font-size: 1rem;
-			font-weight: 700;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			padding: 1rem 2rem;
-			width: 100%;
-			margin-top: 1.5rem;
-			transition: all 0.3s ease;
-			position: relative;
-			overflow: hidden;
-			box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
-		}
-		
-		.btn-register::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: -100%;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-			transition: left 0.5s ease;
-		}
-		
-		.btn-register:hover::before {
-			left: 100%;
-		}
-		
-		.btn-register:hover {
-			background: linear-gradient(135deg, #00f0ff 0%, #8a2be2 100%);
-			border-color: #00f0ff;
-			transform: translateY(-2px);
-			box-shadow: 0 0 40px rgba(0, 240, 255, 0.7);
-		}
-		
-		.btn-register i {
-			margin-left: 10px;
-		}
-		
-		/* Links */
-		.register-link {
-			color: #00bfff;
-			font-size: 0.9rem;
-			text-decoration: none;
-			transition: all 0.3s ease;
-		}
-		
-		.register-link:hover {
-			color: #00f0ff;
-			text-decoration: none;
-			text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
-		}
-		
-		/* Privacy Notice */
-		.privacy-notice {
-			background: rgba(138, 43, 226, 0.1);
-			border: 1px solid rgba(138, 43, 226, 0.3);
-			border-radius: 8px;
-			padding: 1rem;
-			margin-top: 2rem;
-		}
-		
-		.privacy-notice i {
-			color: #8a2be2;
-			margin-right: 0.5rem;
-		}
-		
-		.privacy-notice p {
-			color: #a0d8ef;
-			font-size: 0.85rem;
-			margin: 0;
-		}
-		
-		.privacy-notice a {
-			color: #00bfff;
-			text-decoration: underline;
-		}
-		
-		.privacy-notice a:hover {
-			color: #00f0ff;
-		}
-		
-		/* Responsive */
-		@media (max-width: 768px) {
-			.jumbotron h1 {
-				font-size: 2rem;
-			}
-			
-			.register-card {
-				padding: 2rem 1.5rem;
-				margin: 1rem;
-			}
-			
-			.register-icon i {
-				font-size: 3rem;
-			}
-		}
-	</style>
-{% endblock %}
-
 {% block content %}
-	<!-- Hero Section -->
-	<div class="jumbotron">
-		<div class="container">
-			<h1>
-				<i class="fas fa-user-plus"></i>
-				Register
-			</h1>
-		</div>
-	</div>
-	
+<div class="jumbotron">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<!-- Register Card -->
-				<div class="register-card">
-					<div class="register-icon">
-						<i class="fas fa-rocket"></i>
+		<h1>CREATE ACCOUNT</h1>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-lg-6 col-md-8">
+			<div class="register-wrapper">
+				<!-- Network Animation Canvas -->
+				<canvas class="network-bg"></canvas>
+				
+				<div class="register-content">
+					<!-- Progress Steps -->
+					<div class="progress-steps">
+						<div class="step active">
+							<div class="step-number">01</div>
+							<div class="step-label">DETAILS</div>
+						</div>
+						<div class="step-connector"></div>
+						<div class="step">
+							<div class="step-number">02</div>
+							<div class="step-label">VERIFY</div>
+						</div>
+						<div class="step-connector"></div>
+						<div class="step">
+							<div class="step-number">03</div>
+							<div class="step-label">COMPLETE</div>
+						</div>
 					</div>
 					
-					<div class="welcome-text">
-						<h2>Join The Competition</h2>
-						<p>Create your account to get started</p>
+					<!-- Header -->
+					<div class="register-header">
+						<h2>JOIN THE PLATFORM</h2>
+						<p>Create your account to start competing</p>
 					</div>
 					
-					<!-- Register Form -->
-					<form method="POST">
-						<div class="input-wrapper">
-							<label class="form-label">Username</label>
-							<input type="text" name="name" class="form-control" placeholder="Choose a username" required autofocus>
-							<i class="fas fa-user input-icon"></i>
-							<p class="help-text">Minimum 3 characters</p>
-						</div>
-						
-						<div class="input-wrapper">
-							<label class="form-label">Email Address</label>
-							<input type="email" name="email" class="form-control" placeholder="Enter your email" required>
-							<i class="fas fa-envelope input-icon"></i>
-							<p class="help-text">We'll never share your email</p>
-						</div>
-						
-						<div class="input-wrapper">
-							<label class="form-label">Password</label>
-							<input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required>
-							<i class="fas fa-lock input-icon"></i>
-							<button type="button" class="password-toggle" onclick="togglePassword()">
-								<i class="fas fa-eye" id="toggleIcon"></i>
-							</button>
-							<div class="password-strength" id="passwordStrength">
-								<div class="strength-bar">
-									<div class="strength-fill" id="strengthFill"></div>
+					<!-- Form -->
+					<form method="POST" class="register-form">
+						<div class="form-row">
+							<div class="input-group">
+								<div class="input-label">
+									<span>USERNAME</span>
+									<span class="required">*</span>
 								</div>
-								<div class="strength-text" id="strengthText"></div>
+								<div class="input-field">
+									<svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+										<circle cx="12" cy="7" r="4"></circle>
+									</svg>
+									<input type="text" name="name" placeholder="Choose username" required autofocus>
+									<div class="input-line"></div>
+								</div>
+								<span class="input-help">Min. 3 characters</span>
 							</div>
 						</div>
 						
-						<button type="submit" class="btn btn-register">
-							Create Account
-							<i class="fas fa-arrow-right"></i>
+						<div class="form-row">
+							<div class="input-group">
+								<div class="input-label">
+									<span>EMAIL ADDRESS</span>
+									<span class="required">*</span>
+								</div>
+								<div class="input-field">
+									<svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+										<polyline points="22,6 12,13 2,6"></polyline>
+									</svg>
+									<input type="email" name="email" placeholder="your@email.com" required>
+									<div class="input-line"></div>
+								</div>
+								<span class="input-help">We'll never share your email</span>
+							</div>
+						</div>
+						
+						<div class="form-row">
+							<div class="input-group">
+								<div class="input-label">
+									<span>PASSWORD</span>
+									<span class="required">*</span>
+								</div>
+								<div class="input-field">
+									<svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+										<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+										<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+									</svg>
+									<input type="password" id="password" name="password" placeholder="Strong password" required>
+									<button type="button" class="toggle-visibility" onclick="togglePassword()">
+										<svg id="eyeIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+											<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+											<circle cx="12" cy="12" r="3"></circle>
+										</svg>
+									</button>
+									<div class="input-line"></div>
+								</div>
+								
+								<!-- Password Strength -->
+								<div class="password-strength">
+									<div class="strength-bars">
+										<div class="bar" id="bar1"></div>
+										<div class="bar" id="bar2"></div>
+										<div class="bar" id="bar3"></div>
+										<div class="bar" id="bar4"></div>
+									</div>
+									<span class="strength-label" id="strengthLabel"></span>
+								</div>
+							</div>
+						</div>
+						
+						<button type="submit" class="btn-submit">
+							<span>CREATE ACCOUNT</span>
+							<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+								<polyline points="9 18 15 12 9 6"></polyline>
+							</svg>
 						</button>
 					</form>
 					
-					<!-- Links -->
-					<div class="text-center mt-4">
-						<span style="color: #a0d8ef;">Already have an account? </span>
-						<a href="{{ url_for('auth.login') }}" class="register-link">Login</a>
-					</div>
-					
-					<!-- Privacy Notice -->
-					<div class="privacy-notice">
-						<i class="fas fa-info-circle"></i>
-						<p>
-							By registering, you agree to our 
-							<a href="#">Terms of Service</a> and 
-							<a href="#">Privacy Policy</a>
-						</p>
+					<!-- Footer -->
+					<div class="register-footer">
+						<p>Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a></p>
+						<div class="terms">
+							By creating an account, you agree to our 
+							<a href="#">Terms</a> and <a href="#">Privacy Policy</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-{% endblock %}
+</div>
 
-{% block scripts %}
-	<script>
-	// Password Toggle
-	function togglePassword() {
-		const passwordInput = document.getElementById('password');
-		const toggleIcon = document.getElementById('toggleIcon');
+<style>
+.register-wrapper {
+	background: linear-gradient(135deg, rgba(10, 10, 20, 0.95), rgba(26, 26, 46, 0.95));
+	border: 1px solid rgba(0, 217, 255, 0.2);
+	margin: 3rem 0;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.network-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.15;
+	pointer-events: none;
+}
+
+.register-content {
+	position: relative;
+	z-index: 1;
+	padding: 3rem 2.5rem;
+}
+
+/* Progress Steps */
+.progress-steps {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 3rem;
+	gap: 1rem;
+}
+
+.step {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.step-number {
+	width: 50px;
+	height: 50px;
+	background: rgba(0, 217, 255, 0.1);
+	border: 2px solid rgba(0, 217, 255, 0.3);
+	color: rgba(224, 244, 255, 0.5);
+	font-family: "Rajdhani", sans-serif;
+	font-size: 1rem;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+	transition: all 0.3s ease;
+}
+
+.step.active .step-number {
+	background: linear-gradient(135deg, #00d9ff, #ff00ff);
+	border-color: #00d9ff;
+	color: #000;
+}
+
+.step-label {
+	color: rgba(224, 244, 255, 0.5);
+	font-family: "Rajdhani", sans-serif;
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 1px;
+}
+
+.step.active .step-label {
+	color: #00d9ff;
+}
+
+.step-connector {
+	width: 50px;
+	height: 2px;
+	background: rgba(0, 217, 255, 0.2);
+}
+
+/* Header */
+.register-header {
+	text-align: center;
+	margin-bottom: 3rem;
+	border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+	padding-bottom: 2rem;
+}
+
+.register-header h2 {
+	color: #00d9ff;
+	font-family: "Rajdhani", sans-serif;
+	font-size: 1.75rem;
+	font-weight: 700;
+	letter-spacing: 3px;
+	margin-bottom: 0.75rem;
+}
+
+.register-header p {
+	color: rgba(224, 244, 255, 0.7);
+	font-size: 0.95rem;
+}
+
+/* Form */
+.form-row {
+	margin-bottom: 2rem;
+}
+
+.input-group {
+	width: 100%;
+}
+
+.input-label {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.75rem;
+}
+
+.input-label span:first-child {
+	color: #00d9ff;
+	font-family: "Rajdhani", sans-serif;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 2px;
+}
+
+.required {
+	color: #ff006e;
+	font-size: 1rem;
+}
+
+.input-field {
+	position: relative;
+}
+
+.input-icon {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	color: rgba(0, 217, 255, 0.5);
+	transition: color 0.3s ease;
+}
+
+.input-field input {
+	width: 100%;
+	background: transparent;
+	border: none;
+	border-bottom: 2px solid rgba(0, 217, 255, 0.2);
+	color: #e0f4ff;
+	font-size: 1rem;
+	padding: 0.75rem 0 0.75rem 30px;
+	transition: all 0.3s ease;
+}
+
+.input-field input:focus {
+	outline: none;
+	border-bottom-color: transparent;
+}
+
+.input-field input:focus ~ .input-line {
+	width: 100%;
+}
+
+.input-field input:focus ~ .input-icon {
+	color: #00d9ff;
+}
+
+.input-line {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background: linear-gradient(90deg, #00d9ff, #ff00ff);
+	transition: width 0.4s ease;
+}
+
+.toggle-visibility {
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	color: rgba(0, 217, 255, 0.5);
+	cursor: pointer;
+	padding: 0.5rem;
+	transition: color 0.3s ease;
+}
+
+.toggle-visibility:hover {
+	color: #00d9ff;
+}
+
+.input-help {
+	display: block;
+	color: rgba(224, 244, 255, 0.5);
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+	margin-left: 30px;
+}
+
+/* Password Strength */
+.password-strength {
+	margin-top: 1rem;
+	margin-left: 30px;
+}
+
+.strength-bars {
+	display: flex;
+	gap: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.bar {
+	flex: 1;
+	height: 3px;
+	background: rgba(0, 217, 255, 0.2);
+	transition: all 0.3s ease;
+}
+
+.bar.weak { background: #ff006e; }
+.bar.fair { background: #ff8800; }
+.bar.good { background: #00bfff; }
+.bar.strong { background: #00d9ff; }
+
+.strength-label {
+	color: rgba(224, 244, 255, 0.6);
+	font-family: "Rajdhani", sans-serif;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 1px;
+}
+
+/* Submit Button */
+.btn-submit {
+	width: 100%;
+	background: linear-gradient(135deg, #00d9ff, #0066ff);
+	border: none;
+	color: #000;
+	font-family: "Rajdhani", sans-serif;
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: 2px;
+	padding: 1rem 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	margin-top: 2.5rem;
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-submit::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+	transition: left 0.6s ease;
+}
+
+.btn-submit:hover::before {
+	left: 100%;
+}
+
+.btn-submit:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px rgba(0, 217, 255, 0.4);
+}
+
+/* Footer */
+.register-footer {
+	text-align: center;
+	margin-top: 2.5rem;
+	padding-top: 2rem;
+	border-top: 1px solid rgba(0, 217, 255, 0.1);
+}
+
+.register-footer p {
+	color: rgba(224, 244, 255, 0.7);
+	font-size: 0.95rem;
+	margin-bottom: 1rem;
+}
+
+.register-footer a {
+	color: #00d9ff;
+	font-weight: 600;
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+.register-footer a:hover {
+	color: #ff00ff;
+	text-decoration: underline;
+}
+
+.terms {
+	color: rgba(224, 244, 255, 0.5);
+	font-size: 0.85rem;
+	margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+	.register-content {
+		padding: 2rem 1.5rem;
+	}
+	
+	.progress-steps {
+		gap: 0.5rem;
+	}
+	
+	.step-number {
+		width: 40px;
+		height: 40px;
+		font-size: 0.9rem;
+	}
+	
+	.step-connector {
+		width: 30px;
+	}
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	const canvas = document.querySelector('.network-bg');
+	const ctx = canvas.getContext('2d');
+	const wrapper = document.querySelector('.register-wrapper');
+	
+	canvas.width = wrapper.offsetWidth;
+	canvas.height = wrapper.offsetHeight;
+	
+	const nodes = [];
+	const nodeCount = 20;
+	const connectionDistance = 100;
+	
+	class Node {
+		constructor() {
+			this.x = Math.random() * canvas.width;
+			this.y = Math.random() * canvas.height;
+			this.vx = (Math.random() - 0.5) * 0.5;
+			this.vy = (Math.random() - 0.5) * 0.5;
+			this.radius = Math.random() * 1.5 + 0.5;
+		}
 		
-		if (passwordInput.type === 'password') {
-			passwordInput.type = 'text';
-			toggleIcon.classList.remove('fa-eye');
-			toggleIcon.classList.add('fa-eye-slash');
-		} else {
-			passwordInput.type = 'password';
-			toggleIcon.classList.remove('fa-eye-slash');
-			toggleIcon.classList.add('fa-eye');
+		update() {
+			this.x += this.vx;
+			this.y += this.vy;
+			
+			if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+			if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+		}
+		
+		draw() {
+			ctx.beginPath();
+			ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+			ctx.fillStyle = '#00d9ff';
+			ctx.shadowBlur = 8;
+			ctx.shadowColor = '#00d9ff';
+			ctx.fill();
+			ctx.shadowBlur = 0;
 		}
 	}
 	
-	// Password Strength Checker
-	const passwordInput = document.getElementById('password');
-	const strengthFill = document.getElementById('strengthFill');
-	const strengthText = document.getElementById('strengthText');
+	for (let i = 0; i < nodeCount; i++) {
+		nodes.push(new Node());
+	}
 	
-	passwordInput.addEventListener('input', function() {
-		const password = this.value;
-		let strength = 0;
+	function animate() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		
-		if (password.length >= 6) strength += 20;
-		if (password.length >= 10) strength += 20;
-		if (/[a-z]/.test(password)) strength += 20;
-		if (/[A-Z]/.test(password)) strength += 20;
-		if (/[0-9]/.test(password)) strength += 10;
-		if (/[^a-zA-Z0-9]/.test(password)) strength += 10;
-		
-		strengthFill.style.width = strength + '%';
-		
-		if (strength < 40) {
-			strengthText.textContent = 'Weak';
-			strengthText.className = 'strength-text strength-weak';
-		} else if (strength < 80) {
-			strengthText.textContent = 'Medium';
-			strengthText.className = 'strength-text strength-medium';
-		} else {
-			strengthText.textContent = 'Strong';
-			strengthText.className = 'strength-text strength-strong';
-		}
-		
-		if (password.length === 0) {
-			strengthText.textContent = '';
-		}
-	});
-	
-	// Input Focus Effects
-	const inputs = document.querySelectorAll('.form-control');
-	inputs.forEach(input => {
-		input.addEventListener('focus', function() {
-			this.parentElement.style.transform = 'scale(1.02)';
+		nodes.forEach(node => {
+			node.update();
+			node.draw();
 		});
 		
-		input.addEventListener('blur', function() {
-			this.parentElement.style.transform = 'scale(1)';
-		});
+		for (let i = 0; i < nodes.length; i++) {
+			for (let j = i + 1; j < nodes.length; j++) {
+				const dx = nodes[i].x - nodes[j].x;
+				const dy = nodes[i].y - nodes[j].y;
+				const distance = Math.sqrt(dx * dx + dy * dy);
+				
+				if (distance < connectionDistance) {
+					const opacity = (1 - distance / connectionDistance) * 0.25;
+					ctx.beginPath();
+					ctx.moveTo(nodes[i].x, nodes[i].y);
+					ctx.lineTo(nodes[j].x, nodes[j].y);
+					ctx.strokeStyle = `rgba(0, 217, 255, ${opacity})`;
+					ctx.lineWidth = 0.5;
+					ctx.stroke();
+				}
+			}
+		}
+		
+		requestAnimationFrame(animate);
+	}
+	
+	animate();
+	
+	window.addEventListener('resize', () => {
+		canvas.width = wrapper.offsetWidth;
+		canvas.height = wrapper.offsetHeight;
 	});
-	</script>
+});
+
+function togglePassword() {
+	const input = document.getElementById('password');
+	const icon = document.getElementById('eyeIcon');
+	
+	if (input.type === 'password') {
+		input.type = 'text';
+		icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+	} else {
+		input.type = 'password';
+		icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+	}
+}
+
+// Password Strength
+const passwordInput = document.getElementById('password');
+const bars = [
+	document.getElementById('bar1'),
+	document.getElementById('bar2'),
+	document.getElementById('bar3'),
+	document.getElementById('bar4')
+];
+const strengthLabel = document.getElementById('strengthLabel');
+
+passwordInput.addEventListener('input', function() {
+	const password = this.value;
+	let strength = 0;
+	
+	if (password.length >= 6) strength++;
+	if (password.length >= 10) strength++;
+	if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+	if (/[0-9]/.test(password) && /[^a-zA-Z0-9]/.test(password)) strength++;
+	
+	bars.forEach(bar => bar.className = 'bar');
+	
+	if (strength === 0) {
+		strengthLabel.textContent = '';
+	} else if (strength === 1) {
+		bars[0].classList.add('weak');
+		strengthLabel.textContent = 'WEAK';
+		strengthLabel.style.color = '#ff006e';
+	} else if (strength === 2) {
+		bars[0].classList.add('fair');
+		bars[1].classList.add('fair');
+		strengthLabel.textContent = 'FAIR';
+		strengthLabel.style.color = '#ff8800';
+	} else if (strength === 3) {
+		bars[0].classList.add('good');
+		bars[1].classList.add('good');
+		bars[2].classList.add('good');
+		strengthLabel.textContent = 'GOOD';
+		strengthLabel.style.color = '#00bfff';
+	} else {
+		bars.forEach(bar => bar.classList.add('strong'));
+		strengthLabel.textContent = 'STRONG';
+		strengthLabel.style.color = '#00d9ff';
+	}
+});
+</script>
+{% endblock %}
+
+{% block scripts %}
 {% endblock %}

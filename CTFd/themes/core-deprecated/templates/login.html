@@ -8,73 +8,50 @@
 </div>
 
 <div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="login-card">
-				<!-- Network Animation Canvas -->
-				<canvas class="network-canvas"></canvas>
+	<div class="row justify-content-center">
+		<div class="col-lg-5 col-md-7">
+			<div class="login-box">
+				<!-- Network Animation -->
+				<canvas class="network-bg"></canvas>
 				
-				<div class="card-content">
-					<div class="login-icon">
-						<svg viewBox="0 0 100 100" width="80" height="80">
-							<defs>
-								<linearGradient id="hexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-									<stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
-									<stop offset="100%" style="stop-color:#ff00ff;stop-opacity:1" />
-								</linearGradient>
-							</defs>
-							<polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" 
-									 fill="none" stroke="url(#hexGradient)" stroke-width="2"/>
-							<polygon points="50,15 85,32.5 85,67.5 50,85 15,67.5 15,32.5" 
-									 fill="none" stroke="#00d9ff" stroke-width="1.5" opacity="0.6"/>
-							<circle cx="50" cy="50" r="20" fill="none" stroke="#ff00ff" stroke-width="2"/>
-							<path d="M50,35 L50,50 L60,60" stroke="#00d9ff" stroke-width="3" 
-								  stroke-linecap="round" fill="none"/>
-						</svg>
-					</div>
-					
-					<div class="welcome-text">
+				<div class="box-content">
+					<!-- Header -->
+					<div class="header-section">
 						<h2>WELCOME BACK</h2>
-						<p>Access your secure account</p>
+						<p>Sign in to your account</p>
 					</div>
 					
-					<form method="POST" class="login-form">
-						<div class="form-group">
+					<!-- Form -->
+					<form method="POST">
+						<div class="form-field">
 							<label>USERNAME</label>
-							<div class="input-container">
-								<input type="text" name="name" class="form-control" placeholder="Enter username" required autofocus>
-								<span class="input-border"></span>
-							</div>
+							<input type="text" name="name" placeholder="Enter username" required autofocus>
 						</div>
 						
-						<div class="form-group">
+						<div class="form-field">
 							<label>PASSWORD</label>
-							<div class="input-container">
-								<input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
-								<button type="button" class="toggle-password" onclick="togglePassword()">
-									<svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<div class="password-input">
+								<input type="password" id="password" name="password" placeholder="Enter password" required>
+								<button type="button" class="eye-toggle" onclick="togglePassword()">
+									<svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 										<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
 										<circle cx="12" cy="12" r="3"></circle>
 									</svg>
 								</button>
-								<span class="input-border"></span>
 							</div>
 						</div>
 						
-						<div class="form-actions">
-							<a href="{{ url_for('auth.reset_password') }}" class="forgot-link">Forgot password?</a>
+						<div class="form-options">
+							<a href="{{ url_for('auth.reset_password') }}">Forgot password?</a>
 						</div>
 						
-						<button type="submit" class="btn-submit">
-							<span>LOGIN</span>
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<line x1="5" y1="12" x2="19" y2="12"></line>
-								<polyline points="12 5 19 12 12 19"></polyline>
-							</svg>
+						<button type="submit" class="submit-btn">
+							LOGIN
 						</button>
 					</form>
 					
-					<div class="form-footer">
+					<!-- Footer -->
+					<div class="box-footer">
 						<p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
 					</div>
 				</div>
@@ -84,289 +61,200 @@
 </div>
 
 <style>
-/* Login Card */
-.login-card {
-	background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
-	border: 2px solid rgba(0, 217, 255, 0.4);
-	border-radius: 0;
-	padding: 3rem 2.5rem;
-	margin: 2rem auto;
-	max-width: 500px;
-	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 217, 255, 0.2);
+.login-box {
+	background: linear-gradient(135deg, rgba(10, 10, 20, 0.95), rgba(26, 26, 46, 0.95));
+	border: 1px solid rgba(0, 217, 255, 0.2);
+	margin: 3rem 0;
 	position: relative;
 	overflow: hidden;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
 }
 
-/* Network Animation Canvas */
-.network-canvas {
+.network-bg {
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
+	opacity: 0.15;
 	pointer-events: none;
-	opacity: 0.3;
 }
 
-/* Card Content */
-.card-content {
+.box-content {
 	position: relative;
 	z-index: 1;
+	padding: 3rem 2.5rem;
 }
 
-/* Top Border Animation */
-.login-card::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 2px;
-	background: linear-gradient(90deg, transparent, #00d9ff, #ff00ff, transparent);
-	animation: border-flow 3s linear infinite;
-}
-
-@keyframes border-flow {
-	0% { transform: translateX(-100%); }
-	100% { transform: translateX(100%); }
-}
-
-.login-card:hover {
-	border-color: #00d9ff;
-	box-shadow: 0 12px 40px rgba(0, 217, 255, 0.3), 0 0 80px rgba(255, 0, 255, 0.2);
-}
-
-/* Login Icon */
-.login-icon {
+.header-section {
 	text-align: center;
-	margin-bottom: 2rem;
+	margin-bottom: 3rem;
+	padding-bottom: 2rem;
+	border-bottom: 1px solid rgba(0, 217, 255, 0.1);
 }
 
-.login-icon svg {
-	filter: drop-shadow(0 0 10px rgba(0, 217, 255, 0.6));
-	animation: float-icon 3s ease-in-out infinite;
-}
-
-@keyframes float-icon {
-	0%, 100% { transform: translateY(0); }
-	50% { transform: translateY(-10px); }
-}
-
-/* Welcome Text */
-.welcome-text {
-	text-align: center;
-	margin-bottom: 2rem;
-}
-
-.welcome-text h2 {
+.header-section h2 {
 	color: #00d9ff;
 	font-family: "Rajdhani", sans-serif;
 	font-size: 1.8rem;
 	font-weight: 700;
+	letter-spacing: 3px;
 	margin-bottom: 0.5rem;
-	letter-spacing: 2px;
 }
 
-.welcome-text p {
-	color: #e0f4ff;
+.header-section p {
+	color: rgba(224, 244, 255, 0.7);
 	font-size: 0.95rem;
+	margin: 0;
 }
 
-/* Form Groups */
-.form-group {
+.form-field {
 	margin-bottom: 2rem;
 }
 
-.form-group label {
+.form-field label {
 	display: block;
 	color: #00d9ff;
 	font-family: "Rajdhani", sans-serif;
 	font-size: 0.85rem;
 	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 1px;
+	letter-spacing: 2px;
 	margin-bottom: 0.75rem;
 }
 
-/* Input Container */
-.input-container {
-	position: relative;
-}
-
-.input-container .form-control {
+.form-field input {
 	width: 100%;
-	background: transparent;
-	border: none;
-	border-bottom: 2px solid rgba(0, 217, 255, 0.3);
-	border-radius: 0;
+	background: rgba(10, 10, 20, 0.6);
+	border: 2px solid rgba(0, 217, 255, 0.3);
 	color: #e0f4ff;
-	font-size: 1.1rem;
-	padding: 0.75rem 0;
+	font-size: 1rem;
+	padding: 0.875rem 1rem;
 	transition: all 0.3s ease;
 }
 
-.input-container .form-control:focus {
+.form-field input:focus {
 	outline: none;
-	border-bottom-color: #00d9ff;
-	background: transparent;
-	box-shadow: none;
+	background: rgba(10, 10, 20, 0.8);
+	border-color: #00d9ff;
+	box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
 }
 
-.input-container .form-control:focus ~ .input-border {
-	width: 100%;
+.password-input {
+	position: relative;
 }
 
-.input-border {
+.password-input input {
+	padding-right: 45px;
+}
+
+.eye-toggle {
 	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 0;
-	height: 2px;
-	background: linear-gradient(90deg, #00d9ff, #ff00ff);
-	transition: width 0.3s ease;
-}
-
-.toggle-password {
-	position: absolute;
-	right: 0;
+	right: 12px;
 	top: 50%;
 	transform: translateY(-50%);
 	background: none;
 	border: none;
-	color: #00d9ff;
+	color: rgba(0, 217, 255, 0.6);
 	cursor: pointer;
 	padding: 0.5rem;
 	transition: color 0.3s ease;
 }
 
-.toggle-password:hover {
-	color: #ff00ff;
-}
-
-/* Form Actions */
-.form-actions {
-	text-align: right;
-	margin-bottom: 2rem;
-}
-
-.forgot-link {
+.eye-toggle:hover {
 	color: #00d9ff;
+}
+
+.form-options {
+	text-align: right;
+	margin-bottom: 1.5rem;
+}
+
+.form-options a {
+	color: rgba(0, 217, 255, 0.7);
 	font-size: 0.9rem;
 	text-decoration: none;
 	transition: color 0.3s ease;
 }
 
-.forgot-link:hover {
-	color: #ff00ff;
+.form-options a:hover {
+	color: #00d9ff;
+	text-decoration: underline;
 }
 
-/* Submit Button */
-.btn-submit {
+.submit-btn {
 	width: 100%;
-	background: linear-gradient(135deg, #00d9ff 0%, #0066ff 100%);
+	background: linear-gradient(135deg, #00d9ff, #0066ff);
 	border: none;
 	color: #000;
 	font-family: "Rajdhani", sans-serif;
-	font-size: 1.1rem;
+	font-size: 1rem;
 	font-weight: 700;
-	letter-spacing: 3px;
-	padding: 1.25rem 2rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;
+	letter-spacing: 2px;
+	padding: 1rem;
 	cursor: pointer;
-	position: relative;
-	overflow: hidden;
 	transition: all 0.3s ease;
 }
 
-.btn-submit::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-	transition: left 0.5s ease;
-}
-
-.btn-submit:hover::before {
-	left: 100%;
-}
-
-.btn-submit:hover {
+.submit-btn:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 10px 30px rgba(0, 217, 255, 0.5);
+	box-shadow: 0 8px 25px rgba(0, 217, 255, 0.4);
 }
 
-/* Form Footer */
-.form-footer {
+.box-footer {
 	text-align: center;
 	margin-top: 2rem;
 	padding-top: 2rem;
-	border-top: 1px solid rgba(0, 217, 255, 0.2);
+	border-top: 1px solid rgba(0, 217, 255, 0.1);
 }
 
-.form-footer p {
-	color: #e0f4ff;
+.box-footer p {
+	color: rgba(224, 244, 255, 0.7);
 	font-size: 0.95rem;
+	margin: 0;
 }
 
-.form-footer a {
+.box-footer a {
 	color: #00d9ff;
-	text-decoration: none;
 	font-weight: 600;
-	transition: color 0.3s ease;
+	text-decoration: none;
 }
 
-.form-footer a:hover {
+.box-footer a:hover {
 	color: #ff00ff;
+	text-decoration: underline;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-	.login-card {
+	.box-content {
 		padding: 2rem 1.5rem;
-		margin: 1rem;
-	}
-	
-	.login-icon svg {
-		width: 60px;
-		height: 60px;
 	}
 }
 </style>
 
 <script>
-// Network Animation
 document.addEventListener('DOMContentLoaded', function() {
-	const card = document.querySelector('.login-card');
-	const canvas = card.querySelector('.network-canvas');
+	const canvas = document.querySelector('.network-bg');
 	const ctx = canvas.getContext('2d');
+	const box = document.querySelector('.login-box');
 	
-	canvas.width = card.offsetWidth;
-	canvas.height = card.offsetHeight;
+	canvas.width = box.offsetWidth;
+	canvas.height = box.offsetHeight;
 	
-	// Network nodes
 	const nodes = [];
-	const nodeCount = 12;
-	const connectionDistance = 120;
+	const nodeCount = 15;
 	
 	class Node {
 		constructor() {
 			this.x = Math.random() * canvas.width;
 			this.y = Math.random() * canvas.height;
-			this.vx = (Math.random() - 0.5) * 0.3;
-			this.vy = (Math.random() - 0.5) * 0.3;
-			this.radius = Math.random() * 2 + 1;
+			this.vx = (Math.random() - 0.5) * 0.5;
+			this.vy = (Math.random() - 0.5) * 0.5;
+			this.radius = Math.random() * 1.5 + 0.5;
 		}
 		
 		update() {
 			this.x += this.vx;
 			this.y += this.vy;
-			
 			if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
 			if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 		}
@@ -375,65 +263,42 @@ document.addEventListener('DOMContentLoaded', function() {
 			ctx.beginPath();
 			ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
 			ctx.fillStyle = '#00d9ff';
-			ctx.fill();
-			
-			ctx.shadowBlur = 10;
+			ctx.shadowBlur = 8;
 			ctx.shadowColor = '#00d9ff';
 			ctx.fill();
 			ctx.shadowBlur = 0;
 		}
 	}
 	
-	// Initialize nodes
-	for (let i = 0; i < nodeCount; i++) {
-		nodes.push(new Node());
-	}
+	for (let i = 0; i < nodeCount; i++) nodes.push(new Node());
 	
-	// Animation loop
 	function animate() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		nodes.forEach(node => { node.update(); node.draw(); });
 		
-		nodes.forEach(node => {
-			node.update();
-			node.draw();
-		});
-		
-		// Draw connections
 		for (let i = 0; i < nodes.length; i++) {
 			for (let j = i + 1; j < nodes.length; j++) {
 				const dx = nodes[i].x - nodes[j].x;
 				const dy = nodes[i].y - nodes[j].y;
 				const distance = Math.sqrt(dx * dx + dy * dy);
-				
-				if (distance < connectionDistance) {
-					const opacity = (1 - distance / connectionDistance) * 0.4;
+				if (distance < 100) {
 					ctx.beginPath();
 					ctx.moveTo(nodes[i].x, nodes[i].y);
 					ctx.lineTo(nodes[j].x, nodes[j].y);
-					ctx.strokeStyle = `rgba(0, 217, 255, ${opacity})`;
-					ctx.lineWidth = 1;
+					ctx.strokeStyle = `rgba(0, 217, 255, ${(1 - distance / 100) * 0.25})`;
+					ctx.lineWidth = 0.5;
 					ctx.stroke();
 				}
 			}
 		}
-		
 		requestAnimationFrame(animate);
 	}
-	
 	animate();
-	
-	// Resize handler
-	window.addEventListener('resize', function() {
-		canvas.width = card.offsetWidth;
-		canvas.height = card.offsetHeight;
-	});
 });
 
-// Password Toggle
 function togglePassword() {
 	const input = document.getElementById('password');
 	const icon = document.getElementById('eyeIcon');
-	
 	if (input.type === 'password') {
 		input.type = 'text';
 		icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
@@ -443,7 +308,4 @@ function togglePassword() {
 	}
 }
 </script>
-{% endblock %}
-
-{% block scripts %}
 {% endblock %}
